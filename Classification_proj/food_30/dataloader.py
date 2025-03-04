@@ -18,7 +18,7 @@ class FoodDataLoader_with_TFRecord(FoodTFrecord):
         label = data['label']
 
         image = tf.image.decode_image(image, channels=3, expand_animations = False)
-        image = tf.image.resize(image, (self.image_size,self.image_size))
+        image = tf.image.resize(image, (image, (224, 224))
 
         label = tf.one_hot(label, self.label_num)
         return image, label

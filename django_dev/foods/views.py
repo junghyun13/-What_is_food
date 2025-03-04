@@ -22,6 +22,9 @@ class ClassifierView(LoggedInOnlyView ,TemplateView):
 
 
 def predictImage(request):
+    if 'filePath' not in request.FILES:
+        return HttpResponseBadRequest("File not provided")
+
     fileObj = request.FILES["filePath"]
 
     # 한글 파일명 영어로 바꿔주기
@@ -41,7 +44,7 @@ def predictImage(request):
     testimage = search.file
     food_image = Image.open(testimage)
     food_image = food_image.convert("RGB")
-    food_image = food_image.resize((360, 360))
+    food_image = food_image.resize((224, 224))
     food_image = np.array(food_image)
     x = food_image[np.newaxis, :, :, :]
     pred = model.predict(x)
